@@ -1,0 +1,212 @@
+/* General styling for the page */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-family: Solitreo;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  background: #fee2e9;
+  font-family: "Pangolin", cursive;
+  font-size: 1vmin;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Container for the envelope and card */
+.container {
+  position: relative;
+  top: 0vmin;
+}
+
+/* Envelope design */
+.envelope {
+  position: relative;
+  background: #f980a1;
+  height: 30vmin;
+  width: 47.9vmin;
+}
+
+/* Card design and animation */
+.card {
+  position: absolute;
+  background: white;
+  height: 25vmin;
+  width: 43vmin;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  left: 2.5vmin;
+  top: 0vmin;
+  animation: slide-rev 0.2s ease-out;
+}
+
+/* Card message styling */
+.message {
+  position: absolute;
+  top: 5vmin;
+}
+
+/* Cover design for the envelope */
+.cover {
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-bottom: 15vmin solid #fba7bd;
+  border-left: 24vmin solid transparent;
+  border-right: 24vmin solid transparent;
+  top: 15vmin;
+  z-index: 3;
+}
+
+.cover::after {
+  position: absolute;
+  content: "";
+  border-left: 24.5vmin solid #fcbbcc;
+  border-bottom: 15vmin solid transparent;
+  border-top: 15vmin solid transparent;
+  top: -15vmin;
+  left: -24vmin;
+}
+
+.cover::before {
+  position: absolute;
+  content: "";
+  border-right: 24.5vmin solid #fcbbcc;
+  border-bottom: 15vmin solid transparent;
+  border-top: 15vmin solid transparent;
+  top: -15vmin;
+  left: -0.5vmin;
+}
+
+/* Lid animation for the envelope */
+.lid {
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-top: 15vmin solid #f980a1;
+  border-left: 24vmin solid transparent;
+  border-right: 24vmin solid transparent;
+  top: 0;
+  transform-origin: top;
+  animation: open-rev 2s;
+}
+
+.container:hover .lid {
+  animation: open 0.5s;
+  animation-fill-mode: forwards;
+}
+
+/* Card movement when the envelope is opened */
+.container:hover .card {
+  animation: slide 0.2s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+/* Shadow effect beneath the card */
+.shadow {
+  position: relative;
+  top: 3vmin;
+  border-radius: 50%;
+  opacity: 0.7;
+  height: 2vmin;
+  width: 48vmin;
+  background: #e8c5d0;
+}
+
+/* Heart shape design */
+.heart {
+  position: relative;
+  width: 5vmin;
+  height: 4vmin;
+  top: 7vmin;
+  left: -1vmin;
+}
+
+.heart:before,
+.heart:after {
+  position: absolute;
+  content: "";
+  left: 2.5vmin;
+  top: 7vmin;
+  width: 2.5vmin;
+  height: 4vmin;
+  background: #f40b4a;
+  border-radius: 2.5vmin 2.5vmin 0 0;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+
+.heart:after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+/* Falling petals animation */
+.petal {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: pink;
+  border-radius: 50%;
+  animation: fall 5s infinite;
+}
+
+@keyframes fall {
+  0% {
+      top: -20px;
+      left: calc(100% * random());
+      opacity: 1;
+  }
+  100% {
+      top: 100%;
+      opacity: 0;
+  }
+}
+
+/* Fade-in effect for the page */
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+/* Card animation keyframes */
+@keyframes open {
+  100% {
+      transform: rotatex(180deg);
+  }
+}
+
+@keyframes slide {
+  100% {
+      transform: translatey(-15vmin);
+      z-index: 2;
+  }
+}
+
+@keyframes open-rev {
+  from {
+      transform: rotatex(-180deg);
+  }
+}
+
+@keyframes slide-rev {
+  from {
+      transform: translatey(-15vmin);
+  }
+}

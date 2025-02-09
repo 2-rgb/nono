@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Card for Smarika</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #ffebeb;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Moving hearts background */
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 25% 100%, 0% 35%);
+            opacity: 0.7;
+            animation: floatHearts 6s linear infinite;
+        }
+
+        @keyframes floatHearts {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            margin: 100px auto;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #b22222;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: transform 2s ease-in-out;
+        }
+
+        .rope {
+            position: absolute;
+            width: 10px;
+            height: 100%;
+            background: #8b5e3b;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: transform 2s ease-in-out;
+        }
+
+        .rope-second {
+            left: 45%;
+            transition: transform 2s ease-in-out;
+        }
+
+        .rope-third {
+            left: 55%;
+            transition: transform 2s ease-in-out;
+        }
+
+        .flap {
+            position: absolute;
+            width: 100%;
+            height: 50%;
+            background: #a11d1d;
+            top: 0;
+            left: 0;
+            transform-origin: top;
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            transition: transform 2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button {
+            width: 30px;
+            height: 30px;
+            background-color: black;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 10px;
+            cursor: pointer;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .flower {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: url('flower.png');
+            background-size: cover;
+        }
+
+        .rose-petals {
+            position: fixed;
+            top: -50px;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: url('rose-petal.png');
+            background-size: cover;
+            opacity: 0.8;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        .valentine-text {
+            opacity: 0;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            transform: translateY(20px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .envelope.open .valentine-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope.open .rope,
+        .envelope.open .rope-second,
+        .envelope.open .rope-third {
+            transform: translateY(-50px);
+        }
+
+        .card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('beautiful-card-design.jpg');
+            background-size: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            top: 100%;
+            left: 0;
+            transition: top 1s ease-in-out, opacity 1s ease-in-out;
+            opacity: 0;
+            z-index: 20;
+        }
+
+        .card-page {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: white;
+            color: #333;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .card-page h2 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .card-page p {
+            font-size: 18px;
+        }
+
+        .card-page img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        audio {
+            display: none;
+        }
+
+        .hearts-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 25% 100%, 0% 35%);
+            opacity: 0.7;
+            animation: floatHearts 6s linear infinite;
+        }
+
+        .photo {
+            position: fixed;
+            top: 50%;
+            right: -400px;
+            width: 50%;
+            height: auto;
+            transition: right 2s ease-out, transform 2s ease-out;
+            z-index: 30;
+            transform: translateY(-50%) rotate(90deg);
+        }
+
+        .photo.show {
+            right: 50%;
+            transform: translateY(-50%) rotate(0deg);
+        }
+
+        /* Custom page styles */
+        #happyValentinesWeek {
+            background-color: #ff6f61;
+            color: #fff;
+            background-image: url('happy-valentine-week-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #roseDay {
+            background-color: #f1c1c1;
+            color: #ff4040;
+            background-image: url('rose.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #proposeDay {
+            background-color: #ffad60;
+            color: #5a5a5a;
+            background-image: url('propose-day-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #chocolateDay {
+            background-color: #7f4423;
+            color: #f0d0b0;
+            background-image: url('chocolate.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #teddyDay {
+            background-color: #c65d7b;
+            color: #fce4e1;
+            background-image: url('teddy.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #promiseDay {
+            background-color: #a4d8e7;
+            color: #024a56;
+            background-image: url('promise-day-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #hugDay {
+            background-color: #ffb6b9;
+            color: #3f3d56;
+            background-image: url('hug.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        #valentinesDay {
+            background-color: #ee4b89;
+            color: #fff;
+            background-image: url('valentines-day-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts-background">
+        <script>
+            for (let i = 0; i < 30; i++) {
+                let heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 5 + 5 + 's';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                document.querySelector('.hearts-background').appendChild(heart);
+            }
+        </script>
+    </div>
+
+    <div class="envelope-container" onclick="openEnvelope()">
+        <div class="envelope">
+            <div class="rope"></div>
+            <div class="rope rope-second"></div>
+            <div class="rope rope-third"></div>
+            <div class="flap">
+                <div class="flower"></div>
+                <div class="valentine-text" id="valentineText">
+                    <h1>Oiiiiiii</h1>
+                </div>
+                <div class="button" id="envelopeButton"></div>
+            </div>
+        </div>
+        <div class="card" id="card">
+            <div class="card-page" id="happyValentinesWeek">
+                <h2>Happy Valentine Week, Smarika ❤️</h2>
+                <p>kushii huna paryo jaile hai :)</p>
+            </div>
+            <div class="card-page" id="roseDay">
+                <h2>Rose Day</h2>
+                <p>Celebrate love with the beautiful red rose on this special day!</p>
+            </div>
+            <div class="card-page" id="proposeDay">
+                <h2>Propose Day</h2>
+                <p>Propose to your loved one and express your feelings openly!</p>
+            </div>
+            <div class="card-page" id="chocolateDay">
+                <h2>Chocolate Day</h2>
+                <p>Share chocolates as a sweet gesture of love!</p>
+            </div>
+            <div class="card-page" id="teddyDay">
+                <h2>Teddy Day</h2>
+                <p>Give a soft teddy bear to your loved one for warmth and love!</p>
+            </div>
+            <div class="card-page" id="promiseDay">
+                <h2>Promise Day</h2>
+                <p>Make beautiful promises that reflect your love and care!</p>
+            </div>
+            <div class="card-page" id="hugDay">
+                <h2>Hug Day</h2>
+                <p>A warm hug can say more than words. Show your love with a hug!</p>
+            </div>
+            <div class="card-page" id="valentinesDay">
+                <h2>Happy Valentine's Day</h2>
+                <p> Smarika, Happy Valentine's Day!</p>
+                <img src="bhai.jpg" alt="You and Smarika">
+            </div>
+        </div>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="titanic.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="photo" id="photo">
+        <img src="baini.jpg" alt="You and Smarika">
+    </div>
+
+    <script>
+        let currentPage = 0;
+        const pages = [
+            "happyValentinesWeek", "roseDay", "proposeDay", "chocolateDay", "teddyDay", "promiseDay", "hugDay", "valentinesDay"
+        ];
+
+        function openEnvelope() {
+            document.querySelector(".envelope").classList.add("open");
+            document.getElementById("card").style.top = "5%";
+            document.getElementById("card").style.opacity = 1;
+            document.getElementById("envelopeButton").style.opacity = 1;
+
+            const bgMusic = document.getElementById("bg-music");
+            bgMusic.play();
+
+            createFallingFlowers();
+            showPage();
+        }
+
+        function createFallingFlowers() {
+            for (let i = 0; i < 30; i++) {
+                let petal = document.createElement("div");
+                petal.classList.add("rose-petals");
+                petal.style.left = Math.random() * 100 + "vw";
+                petal.style.animationDuration = Math.random() * 2 + 3 + "s";
+                document.body.appendChild(petal);
+                setTimeout(() => petal.remove(), 5000);
+            }
+        }
+
+        function showPage() {
+            if (currentPage > 0) {
+                const prevCardPage = document.getElementById(pages[currentPage - 1]);
+                prevCardPage.style.display = "none";
+            }
+
+            const currentCardPage = document.getElementById(pages[currentPage]);
+            currentCardPage.style.display = "block";
+            currentCardPage.style.opacity = 1;
+            currentCardPage.style.transform = "translateY(0)";
+
+            currentPage++;
+            if (currentPage < pages.length) {
+                setTimeout(showPage, 3000);
+            } else {
+                setTimeout(() => {
+                    document.querySelector(".envelope-container").style.transform = "translateX(-100%)";
+                    setTimeout(() => {
+                        document.getElementById("photo").classList.add("show");
+                    }, 2000);
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>
